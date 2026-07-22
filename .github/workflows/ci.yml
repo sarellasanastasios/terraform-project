@@ -30,7 +30,9 @@ jobs:
           az acr build \
             --registry ${{ vars.ACR_NAME }} \
             --image terraform-app:${{ github.sha }} \
-            .
+            --file app/Dockerfile \
+            app
+            
           
           
           
