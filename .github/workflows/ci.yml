@@ -25,13 +25,23 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Build and push image to ACR   
+      - name: Build Docker Image
         run: |
-          az acr build \
-            --registry ${{ vars.ACR_NAME }} \
-            --image terraform-app:${{ github.sha }} \
-            --file app/Dockerfile \
-            app
+          docker build -t terraform-app:${{ github.sha }} -f app/Dockerfile app
+
+      - name: Login to ACR
+        run: |
+          az acr login --name ${{ vars.ACR_NAME }}
+
+      - name: Tag image
+        run: |
+          docker tag terraform-app:${{ github.sha }} ${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
+
+
+      - name: Push image
+        run: |
+        docker push ${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
+        
             
           
           
