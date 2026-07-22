@@ -28,17 +28,17 @@ jobs:
           tenant-id: ${{ vars.AZURE_TENANT_ID }}
           subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
 
-      - name: "Get AKS credentials
+      - name: "Get AKS credentials"
         run: |
           az aks get-credentials \
             --resource-group rg-prod-aks \
             --name aks-prod \
             --overwrite-existing
 
-       - name: Deploy new image
-         run: |
-           kubectl set image deployment/node-app \
-             node-app=${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
+      - name: Deploy new image
+        run: |
+          kubectl set image deployment/node-app \
+            node-app=${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
              
            
     
