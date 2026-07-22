@@ -40,7 +40,7 @@ jobs:
 
       - name: Push image
         run: |
-        docker push ${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
+         docker push ${{ vars.ACR_NAME }}.azurecr.io/terraform-app:${{ github.sha }}
         
             
           
